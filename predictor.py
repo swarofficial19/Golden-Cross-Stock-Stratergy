@@ -1,11 +1,17 @@
 import pandas as pd
 
 # 1. DATA INGESTION (Knowledge Base)
-def load_data(file_path):
+import os  # Add this at the very top of your file (Line 1)
+
+def load_data(file_name):
+    # This finds the folder where your predictor.py is actually located
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    full_path = os.path.join(base_path, file_name)
+    
     try:
-        return pd.read_csv(file_path)
+        return pd.read_csv(full_path)
     except FileNotFoundError:
-        print("Error: Knowledge Base file not found.")
+        print(f"Error: Could not find {file_name} at {full_path}")
         return None
 
 # 2. FEATURE EXTRACTION (Heuristics)
