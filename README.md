@@ -1,4 +1,4 @@
-FinTech AI: Stock AnalyZer
+FinTech AI: Stock Analyzer
 
 
 🤖 Project Overview
