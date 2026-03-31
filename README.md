@@ -1,4 +1,6 @@
 FinTech AI: Stock Analyser
+
+
 🤖 Project Overview
 This project is a Rule-Based Expert System designed to provide financial decision support. It identifies market trend reversals (Bullish and Bearish) by applying Heuristic-based Inference to historical stock price data.
 
