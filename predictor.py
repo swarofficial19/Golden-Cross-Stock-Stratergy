@@ -1,7 +1,7 @@
 import pandas as pd
 
 # 1. DATA INGESTION (Knowledge Base)
-import os  # Add this at the very top of your file (Line 1)
+import os  
 
 def load_data(file_name):
     # This finds the folder where your predictor.py is actually located
@@ -42,12 +42,28 @@ def make_prediction(df):
         return "⚖️ PREDICTION: NEUTRAL (No trend change detected)"
 
 # --- Execution ---
-data = load_data('stock_data.csv')
-if data is not None:
-    data_with_features = apply_heuristics(data)
-    # We need at least 5 rows to calculate the Long_MA(5)
-    if len(data_with_features) >= 5:
-        result = make_prediction(data_with_features)
-        print(result)
+full_dataset = load_data('stock_data.csv')
+
+if full_dataset is not None:
+    # 1. USER INTERFACE (The Trigger)
+    print("\n--WELCOME TO STOCK ANALYSER--")
+    print("Available STOCKS: TCS, INFY, SBI")
+    user_choice = input("Enter the STOCKS to analyze: ").strip().upper()
+
+    # 2. KNOWLEDGE BASE FILTERING
+    # This isolates the specific entity's data
+    filtered_data = full_dataset[full_dataset['Ticker'] == user_choice].copy()
+
+    if not filtered_data.empty:
+        # 3. FEATURE EXTRACTION & INFERENCE
+        data_with_features = apply_heuristics(filtered_data)
+        
+        # Ensure we have enough data for the 5-day Long_MA
+        if len(data_with_features) >= 5:
+            print(f"\n--- AI Analysis for {user_choice} ---")
+            result = make_prediction(data_with_features)
+            print(result)
+        else:
+            print(f"Error: Not enough data points for {user_choice}.")
     else:
-        print("Not enough data in Knowledge Base to run inference.")
+        print(f"Error: '{user_choice}' not found in the Knowledge Base.")
